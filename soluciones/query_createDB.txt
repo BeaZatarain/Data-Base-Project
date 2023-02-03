@@ -1,0 +1,102 @@
+-- MySQL Workbench Synchronization
+-- Generated: 2023-02-03 18:52
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: Usuario
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+ALTER TABLE `videoclub`.`actors` 
+CHANGE COLUMN `actor_id` `actor_id` INT(11) NOT NULL ,
+CHANGE COLUMN `first_name` `first_name` VARCHAR(1000) NULL DEFAULT NULL ,
+CHANGE COLUMN `last_name` `last_name` VARCHAR(1000) NULL DEFAULT NULL ,
+CHANGE COLUMN `nombrecompleto` `nombrecompleto` VARCHAR(2000) NULL DEFAULT NULL ,
+ADD PRIMARY KEY (`actor_id`);
+;
+
+ALTER TABLE `videoclub`.`films` 
+CHANGE COLUMN `film_id` `film_id` INT(11) NOT NULL ,
+CHANGE COLUMN `title` `title` VARCHAR(1000) NULL DEFAULT NULL ,
+CHANGE COLUMN `description` `description` VARCHAR(2000) NULL DEFAULT NULL ,
+CHANGE COLUMN `release_year` `release_year` INT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `language_id` `language_id` INT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `rental_duration` `rental_duration` INT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `rental_rate` `rental_rate` FLOAT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `length` `length` INT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `replacement_cost` `replacement_cost` FLOAT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `rating` `rating` VARCHAR(200) NULL DEFAULT NULL ,
+CHANGE COLUMN `special_features` `special_features` VARCHAR(2000) NULL DEFAULT NULL ,
+ADD PRIMARY KEY (`film_id`),
+ADD INDEX `fk_films_language_idx` (`language_id` ASC) VISIBLE;
+;
+
+ALTER TABLE `videoclub`.`inventory` 
+CHANGE COLUMN `inventory_id` `inventory_id` INT(11) NOT NULL ,
+CHANGE COLUMN `film_id` `film_id` INT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `store_id` `store_id` INT(11) NULL DEFAULT NULL ,
+ADD PRIMARY KEY (`inventory_id`),
+ADD INDEX `fk_inventory_films1_idx` (`film_id` ASC) VISIBLE;
+;
+
+ALTER TABLE `videoclub`.`language` 
+CHANGE COLUMN `language_id` `language_id` INT(11) NOT NULL ,
+CHANGE COLUMN `language` `language` VARCHAR(200) NULL DEFAULT NULL ,
+ADD PRIMARY KEY (`language_id`);
+;
+
+ALTER TABLE `videoclub`.`old_hdd1` 
+CHANGE COLUMN `film_id` `film_id` INT(11) NOT NULL ,
+CHANGE COLUMN `actor_id` `actor_id` INT(11) NULL DEFAULT NULL ,
+ADD PRIMARY KEY (`film_id`),
+ADD INDEX `fk_old_hdd1_actors1_idx` (`actor_id` ASC) VISIBLE;
+;
+
+ALTER TABLE `videoclub`.`old_hdd2` 
+DROP COLUMN `film_id`,
+ADD COLUMN `films_film_id` INT(11) NOT NULL AFTER `category`,
+CHANGE COLUMN `category_id` `category_id` INT(11) NOT NULL ,
+CHANGE COLUMN `category` `category` VARCHAR(100) NULL DEFAULT NULL ,
+ADD PRIMARY KEY (`category_id`, `films_film_id`),
+ADD INDEX `fk_old_hdd2_films1_idx` (`films_film_id` ASC) VISIBLE;
+;
+
+ALTER TABLE `videoclub`.`films` 
+ADD CONSTRAINT `fk_films_language`
+  FOREIGN KEY (`language_id`)
+  REFERENCES `videoclub`.`language` (`language_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `videoclub`.`inventory` 
+ADD CONSTRAINT `fk_inventory_films1`
+  FOREIGN KEY (`film_id`)
+  REFERENCES `videoclub`.`films` (`film_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `videoclub`.`old_hdd1` 
+ADD CONSTRAINT `fk_old_hdd1_films1`
+  FOREIGN KEY (`film_id`)
+  REFERENCES `videoclub`.`films` (`film_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_old_hdd1_actors1`
+  FOREIGN KEY (`actor_id`)
+  REFERENCES `videoclub`.`actors` (`actor_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `videoclub`.`old_hdd2` 
+ADD CONSTRAINT `fk_old_hdd2_films1`
+  FOREIGN KEY (`films_film_id`)
+  REFERENCES `videoclub`.`films` (`film_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
