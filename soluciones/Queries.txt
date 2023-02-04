@@ -1,0 +1,43 @@
+
+-- Query 1:
+
+SELECT film_id,actor_id,COUNT(*)
+FROM old_hdd1
+GROUP BY film_id,actor_id
+HAVING COUNT(*) > 1
+
+-- Query 2
+
+SELECT title
+FROM films
+WHERE special_features LIKE 'Trailers' ;
+
+-- Query 3:
+
+SELECT title as `tit`, inventory_id, store_id, replacement_cost
+FROM films
+LEFT JOIN inventory
+ON films.film_id = inventory.film_id
+ORDER BY replacement_cost DESC;
+
+-- Query 4:
+
+SELECT title as `tit`, nombrecompleto as `actorname`, SUM(films.title) as `Title Count`
+FROM films
+LEFT JOIN old_hdd1
+ON films.film_id = old_hdd1.film_id
+LEFT JOIN actors
+ON old_hdd1.actor_id = actors.actor_id
+WHERE nombrecompleto IS NOT NULL
+GROUP BY title, old_hdd1.actor_id;
+
+-- Query 4:
+
+SELECT title as `tit`, nombrecompleto as `actorname`, SUM(films.title) as `Title Count`
+FROM films
+LEFT JOIN old_hdd1
+ON films.film_id = old_hdd1.film_id
+LEFT JOIN actors
+ON old_hdd1.actor_id = actors.actor_id
+WHERE nombrecompleto IS NOT NULL
+GROUP BY title, old_hdd1.actor_id;
