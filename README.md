@@ -1,5 +1,7 @@
 # Data-Base-Project
 
+![Portada]()
+
 ## Descripción general del proyecto
 
 Este proyecto consiste en crear una base de datos en Mysql, utilizanto Mysql Workbench y Python. 
@@ -18,7 +20,32 @@ Con ello, este proceso ha consistido básicament en:
 
 2. Limpieza de información que no aportaba valor a la base de datos (columnas constantes, duplicados, nulos...)
 
-## Limpieza y Exploración de datos 
+Finalmente, tras todo este proceso, hemos importado los CSVs a Mysql para crear la base de datos. Cabe remarcar que, tras este proceso:
+
+ - El CSV de old_HDD, ha sido dividido en dos "tablas puente". Por un lado, old_HDD1.csv con el fin de ser tabla intermedia entre films y actors y por otro, old_HDD2.csv, que relacionado con la tabla de films, nos proporcionará la informaición necesaria para consultar las categorías de todas las películas. 
+
+ - El CSV de category, no ha sido importado ya que tras el proceso de limpieza en Python, la información que contenía se ha incluido en old_HDD2.csv como tabla puente de conexión.
+ 
+ En definitiva, los CSVs que se han importado son los siguientes:
+ 
+ ![Portada]()
+ 
+
+## Creación de la Base de Datos 'Vidieoclub'
+
+
+Una vez finalizado el proceso de exploración y limpieza de los datos aportados por el cliente, se ha llevado a cabo un proceso de análisis para establecer las relaciones entre las tablas de la nueva base de datos. 
+
+También, se ha analizado cuidadosamente, el tipo de dato que contiene cada columna de las identidades de la base de datos para evitar errores a la hora de la creación. 
+
+Con ello, el resultado final, se puede apreciar en la siguiente imagen:
+
+ ![Relaciones]()
+
+
+
+
+Tal y como se puede observar, la identidad o tabla "rental" ha sido la única que no ha sido relacionada con el resto de identidades. Esto se debe a que se tratar de un negocio ficticio que no ha comenzado su actividad en el mercado aún. Por tanto, teóricamente, cuando el negocio comenzase su actividad y tuviese más claro sus procesos internos, se relacionaría mediante una query con la tabla de inventory (a través del inventory_id).
 
 
 
