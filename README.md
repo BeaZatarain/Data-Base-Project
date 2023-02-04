@@ -1,6 +1,6 @@
 # Data-Base-Project
 
-![Portada]()
+![Portada](https://github.com/BeaZatarain/Data-Base-Project/blob/main/images/encabezadovideoclub.png)
 
 ## Descripción general del proyecto
 
@@ -28,7 +28,7 @@ Finalmente, tras todo este proceso, hemos importado los CSVs a Mysql para crear 
  
  En definitiva, los CSVs que se han importado son los siguientes:
  
- ![Portada]()
+ ![imports](https://github.com/BeaZatarain/Data-Base-Project/blob/main/images/csvsimport.png)
  
 
 ## Creación de la Base de Datos 'Vidieoclub'
@@ -40,7 +40,7 @@ También, se ha analizado cuidadosamente, el tipo de dato que contiene cada colu
 
 Con ello, el resultado final, se puede apreciar en la siguiente imagen:
 
- ![Relaciones]()
+ ![Relaciones](https://github.com/BeaZatarain/Data-Base-Project/blob/main/images/Relacion_BD.png)
 
 
 
