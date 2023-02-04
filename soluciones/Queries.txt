@@ -1,37 +1,27 @@
 
--- Query 1:
+-- Query 1: revisar si hay algún duplicado en la primary key de old_hdd1
 
 SELECT film_id,actor_id,COUNT(*)
 FROM old_hdd1
 GROUP BY film_id,actor_id
 HAVING COUNT(*) > 1
 
--- Query 2
+-- Query 2 consultar que peliculas tienen trailer
 
 SELECT title
 FROM films
 WHERE special_features LIKE 'Trailers' ;
 
--- Query 3:
+-- Query 3: consultar las películas con mayor coste de reemplazo
 
 SELECT title as `tit`, inventory_id, store_id, replacement_cost
 FROM films
 LEFT JOIN inventory
 ON films.film_id = inventory.film_id
-ORDER BY replacement_cost DESC;
+ORDER BY replacement_cost DESC
+LIMIT 3;
 
--- Query 4:
-
-SELECT title as `tit`, nombrecompleto as `actorname`, SUM(films.title) as `Title Count`
-FROM films
-LEFT JOIN old_hdd1
-ON films.film_id = old_hdd1.film_id
-LEFT JOIN actors
-ON old_hdd1.actor_id = actors.actor_id
-WHERE nombrecompleto IS NOT NULL
-GROUP BY title, old_hdd1.actor_id;
-
--- Query 4:
+-- Query 4: ver el número de películas que tiene por actor
 
 SELECT title as `tit`, nombrecompleto as `actorname`, SUM(films.title) as `Title Count`
 FROM films
@@ -39,5 +29,52 @@ LEFT JOIN old_hdd1
 ON films.film_id = old_hdd1.film_id
 LEFT JOIN actors
 ON old_hdd1.actor_id = actors.actor_id
-WHERE nombrecompleto IS NOT NULL
-GROUP BY title, old_hdd1.actor_id;
+WHERE nombrecompleto IS NOT NULL 
+GROUP BY title, old_hdd1.actor_id
+LIMIT 3;
+
+-- Query 5: ver a qué peliculas le falta asignación de número de inventario y store-id de cara a prepararse para su nuevo negocio
+
+SELECT title as `tit`, inventory_id, store_id, replacement_cost
+FROM films
+LEFT JOIN inventory
+ON films.film_id = inventory.film_id
+WHERE inventory.film_id IS NULL and inventory.store_id IS NULL 
+ORDER BY title DESC
+LIMIT 3
+
+-- Query 6: saber cuales son las peliculas que más tiene en su posesion, sabiendo sus actores.
+
+SELECT films.title, COUNT(films.film_id) as `Title Count`
+FROM films
+LEFT JOIN old_hdd1
+ON films.film_id = old_hdd1.film_id
+LEFT JOIN actors
+ON old_hdd1.actor_id = actors.actor_id
+WHERE actors.nombrecompleto IS NOT NULL 
+GROUP BY films.title
+ORDER BY `Title Count` DESC
+LIMIT 3;
+
+-- Query 7: saber cual es la categoría de película que más se repite.
+SELECT old_hdd2.category, COUNT(old_hdd2.category_id) as `Category Count`
+FROM films
+LEFT JOIN old_hdd2
+ON films.film_id = old_hdd2.film_id
+GROUP BY old_hdd2.category
+ORDER BY `Category Count` DESC
+LIMIT 3;
+
+-- Query 8: consultar que categoría caracteriza más a cada actor
+
+SELECT actors.nombrecompleto, old_hdd2.category
+FROM films
+LEFT JOIN old_hdd1
+ON films.film_id = old_hdd1.film_id
+LEFT JOIN actors
+ON old_hdd1.actor_id = actors.actor_id
+LEFT JOIN old_hdd2
+ON old_hdd1.actor_id = old_hdd2.film_id
+WHERE actors.nombrecompleto IS NOT NULL AND old_hdd2.category IS NOT NULL
+GROUP BY nombrecompleto, category
+LIMIT 3;
