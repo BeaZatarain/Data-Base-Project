@@ -45,7 +45,11 @@ Con ello, el resultado final, se puede apreciar en la siguiente imagen:
 
 
 
-Tal y como se puede observar, la identidad o tabla "rental" ha sido la única que no ha sido relacionada con el resto de identidades. Esto se debe a que se tratar de un negocio ficticio que no ha comenzado su actividad en el mercado aún. Por tanto, teóricamente, cuando el negocio comenzase su actividad y tuviese más claro sus procesos internos, se relacionaría mediante una query con la tabla de inventory (a través del inventory_id).
+Tal y como se puede observar, la identidad o tabla "rental" ha sido la única que no ha sido relacionada con el resto de identidades. 
+
+Esto se debe a que se tratar de un negocio ficticio que no ha comenzado su actividad en el mercado aún. Es por ello, que se ha tomado la decisión de dejar la tabla como histórico de su actividad a modo de consulta. 
+
+Por tanto, teóricamente, cuando el negocio comenzase su actividad y tuviese más claro sus procesos internos, se crearía una tabla nueva en función de sus necesidades y relacionaría mediante una query con la tabla de inventory (a través del inventory_id).
 
 
 
